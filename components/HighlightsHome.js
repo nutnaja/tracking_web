@@ -59,7 +59,7 @@ export default function HighlightsHome() {
             gutterBottom
             sx={{ fontWeight: "bold" }}
           >
-            ค้นหาโลกด้วย Map Explorer
+            ค้นหาโลกด้วย Track Map
           </Typography>
           <Typography
             variant="h5"
@@ -81,9 +81,9 @@ export default function HighlightsHome() {
             >
               ไปที่แผนที่
             </Button>
-            <Button variant="outlined" size="large">
+            {/* <Button variant="outlined" size="large">
               เรียนรู้เพิ่มเติม
-            </Button>
+            </Button> */}
           </Box>
         </Container>
       </Box>
