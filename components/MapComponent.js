@@ -1,7 +1,14 @@
 // components/MapComponent.jsx
 "use client";
 
-import { Typography, Breadcrumbs, Link } from "@mui/material";
+import {
+  Typography,
+  Breadcrumbs,
+  Link,
+  LinearProgress,
+  Container,
+  Grid,
+} from "@mui/material";
 
 import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
@@ -12,14 +19,12 @@ export default function MapComponent() {
   const map = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   // ฟังก์ชันสำหรับดึงข้อมูลแบบแบ่งหน้า
   async function fetchAllData() {
     let allFeatures = [];
     let page = 1;
-    const limit = 10000; // ค่าที่ API ยอมรับ
+    const limit = 5000; // ค่าที่ API ยอมรับ
     let hasMoreData = true;
-
     while (hasMoreData) {
       const offset = (page - 1) * limit;
       const response = await fetch(
@@ -61,7 +66,7 @@ export default function MapComponent() {
       container: mapContainer.current,
       style: "https://demotiles.maplibre.org/style.json", // style URL สาธารณะ
       center: [100.5018, 13.7563], // ตั้งค่าเริ่มต้นที่กรุงเทพฯ
-      zoom: 9,
+      zoom: 3,
     });
 
     // เพิ่ม navigation control
@@ -95,12 +100,12 @@ export default function MapComponent() {
           clusterRadius: 50,
         });
 
+        //เอาไว้ทดสอบเวลา mark ไม่ออกนะ
         // map.current.addSource('points', {
         //     type: 'geojson',
         //     data: geoJsonData,
         //     cluster: false
         //   });
-
 
         // Layer สำหรับแสดงกลุ่ม (clusters)
         map.current.addLayer({
@@ -123,11 +128,11 @@ export default function MapComponent() {
             "circle-color": [
               "step",
               ["get", "point_count"],
-              "#51bbd6", // สีสำหรับจุด 1-99
+              "#66BB6A", // สีสำหรับจุด 1-99
               100,
-              "#f1f075", // สีสำหรับจุด 100-999
+              "#FFA726", // สีสำหรับจุด 100-999
               1000,
-              "#f28cb1", // สีสำหรับจุด 1000 ขึ้นไป
+              "#E53935", // สีสำหรับจุด 1000 ขึ้นไป
             ],
             "circle-stroke-width": 2,
             "circle-stroke-color": "#ffffff",
@@ -157,7 +162,7 @@ export default function MapComponent() {
           source: "points",
           filter: ["!", ["has", "point_count"]],
           paint: {
-            "circle-color": "#FF0000",
+            "circle-color": "#9E9E9E",
             "circle-radius": 6,
             "circle-stroke-width": 2,
             "circle-stroke-color": "#ffffff",
@@ -256,20 +261,28 @@ export default function MapComponent() {
 
   return (
     <div>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          หน้าแรก
-        </Link>
-        <Typography sx={{ color: "text.primary" }}>
-          พิกัดแสดงบนแผนที่
-        </Typography>
-      </Breadcrumbs>
-      <div
-        ref={mapContainer}
-        style={{ width: "100%", height: "500px", borderRadius: "8px" }}
-      />
-      {loading && <p>กำลังโหลดแผนที่...</p>}
-      {error && <p className="error">เกิดข้อผิดพลาด: {error}</p>}
+      <Grid container spacing={2} className='pb-2 pt-4'>
+        <Grid size={1}></Grid>
+        <Grid size={11}>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href="/">
+              หน้าแรก
+            </Link>
+            <Typography sx={{ color: "text.primary" }}>
+              พิกัดแสดงบนแผนที่
+            </Typography>
+          </Breadcrumbs>
+        </Grid>
+      </Grid>
+
+      <Container fixed>
+        <div
+          ref={mapContainer}
+          style={{ width: "100%", height: "700px", borderRadius: "8px" }}
+        />
+        {loading && <LinearProgress color="secondary" />}
+        {error && <p className="error">เกิดข้อผิดพลาด: {error}</p>}
+      </Container>
     </div>
   );
 }
