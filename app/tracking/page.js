@@ -1,11 +1,12 @@
+import MapComponent from "@/components/MapComponent"
 import ResponsiveAppBar from "@/components/ResponsiveAppBar"
-import TrackingMap from "@/components/TrackingMap"
+
 
 function page() {
   return (
     <div>
     <ResponsiveAppBar />
-    <TrackingMap />
+    <MapComponent />
     </div>
   )
 }
