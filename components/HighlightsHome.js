@@ -59,7 +59,7 @@ export default function HighlightsHome() {
             gutterBottom
             sx={{ fontWeight: "bold" }}
           >
-            ค้นหาโลกด้วย Track Map
+            จุดสำรวจใหม่ด้วยตัวคุณ
           </Typography>
           <Typography
             variant="h5"
@@ -99,7 +99,7 @@ export default function HighlightsHome() {
           color="text.secondary"
           sx={{ mb: 6 }}
         >
-          ค้นพบคุณสมบัติและฟีเจอร์ที่จะช่วยให้การเดินทางของคุณสะดวกยิ่งขึ้น
+          ค้นพบคุณสมบัติและฟีเจอร์ที่จะช่วยให้การเดินทางของคุณสะดวกยิ่งขึ้น (ยังไม่มี)
         </Typography>
 
         <Grid container spacing={4}>
