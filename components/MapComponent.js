@@ -66,8 +66,8 @@ export default function MapComponent() {
       container: mapContainer.current,
       style: "https://demotiles.maplibre.org/style.json", // style URL สาธารณะ
       center: [100.5018, 13.7563], // ตั้งค่าเริ่มต้นที่กรุงเทพฯ
-      zoom: 4,
-      pitch: 60,
+      zoom: 7,
+      pitch: 45,
       bearing: 0
     });
 
