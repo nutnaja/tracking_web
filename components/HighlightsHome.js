@@ -59,17 +59,9 @@ export default function HighlightsHome() {
             gutterBottom
             sx={{ fontWeight: "bold" }}
           >
-            จุดสำรวจใหม่ด้วยตัวคุณ
+            จุดร้านสะดวกซื้อที่ท่านตามหา
           </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
-            paragraph
-          >
-            ค้นพบสถานที่ใหม่ๆ วางแผนเส้นทางการเดินทาง และสำรวจโลกรอบตัวคุณ
-            ด้วยแผนที่ที่ใช้งานง่ายและมีประสิทธิภาพ
-          </Typography>
+ 
           <Box
             sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}
           >

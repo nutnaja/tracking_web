@@ -19,11 +19,10 @@ export default function MapComponent() {
   const map = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // ฟังก์ชันสำหรับดึงข้อมูลแบบแบ่งหน้า
   async function fetchAllData() {
     let allFeatures = [];
     let page = 1;
-    const limit = 5000; // ค่าที่ API ยอมรับ
+    const limit = 10000; // ดึงที่ละ 10000 ข้อมูล
     let hasMoreData = true;
     while (hasMoreData) {
       const offset = (page - 1) * limit;
@@ -44,13 +43,11 @@ export default function MapComponent() {
         hasMoreData = false;
       }
 
-      // ถ้าได้ข้อมูลน้อยกว่า limit แสดงว่าไม่มีข้อมูลเพิ่มแล้ว
       if (data.features.length < limit) {
         hasMoreData = false;
       }
     }
 
-    // สร้าง GeoJSON จากข้อมูลทั้งหมด
     return {
       type: "FeatureCollection",
       features: allFeatures,
@@ -278,9 +275,12 @@ export default function MapComponent() {
       </Grid>
 
       <Container fixed>
+      <div className="pb-2">
+        <h1>พิกัดแสดงบนแผนที่ทั้งหมด</h1>
+      </div>
         <div
           ref={mapContainer}
-          style={{ width: "100%", height: "700px", borderRadius: "8px" }}
+          style={{ width: "100%", height: "600px", borderRadius: "8px" }}
         />
         {loading && <LinearProgress color="secondary" />}
         {error && <p className="error">เกิดข้อผิดพลาด: {error}</p>}
