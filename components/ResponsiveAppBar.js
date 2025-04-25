@@ -9,9 +9,6 @@ import {
 import Link from "next/link";
 
 function ResponsiveAppBar() {
-
-
-
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">

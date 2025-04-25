@@ -1,14 +1,7 @@
 // components/MapComponent.jsx
 "use client";
 
-import {
-  Typography,
-  Breadcrumbs,
-  Link,
-  LinearProgress,
-  Container,
-  Grid,
-} from "@mui/material";
+import { LinearProgress, Container, Button , Typography } from "@mui/material";
 
 import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
@@ -19,6 +12,7 @@ export default function MapComponent() {
   const map = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [countries, setCountries] = useState([]);
   async function fetchAllData() {
     let allFeatures = [];
     let page = 1;
@@ -55,17 +49,16 @@ export default function MapComponent() {
   }
 
   useEffect(() => {
-    // ตรวจสอบว่าสร้างแผนที่แล้วหรือไม่
     if (map.current) return;
 
-    // สร้างแผนที่เมื่อ component ถูกโหลด
+    // สร้างแผนที่เมื่อถูกโหลด
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: "https://demotiles.maplibre.org/style.json", // style URL สาธารณะ
       center: [100.5018, 13.7563], // ตั้งค่าเริ่มต้นที่กรุงเทพฯ
       zoom: 7,
       pitch: 45,
-      bearing: 0
+      bearing: 0,
     });
 
     // เพิ่ม navigation control
@@ -89,6 +82,31 @@ export default function MapComponent() {
           setLoading(false);
           return;
         }
+
+        const countryGroups = {};
+        geoJsonData.features.forEach((feature) => {
+          const country = feature.properties.ct_en || "Unknown";
+          const coords = feature.geometry.coordinates;
+
+          if (!countryGroups[country]) {
+            countryGroups[country] = [];
+          }
+          countryGroups[country].push(coords);
+        });
+
+        // สร้าง bounds สำหรับแต่ละประเทศ
+        const countryData = Object.entries(countryGroups).map(
+          ([country, coords]) => {
+            const bounds = new maplibregl.LngLatBounds();
+            coords.forEach((coord) => bounds.extend(coord));
+            return {
+              name: country,
+              bounds,
+            };
+          }
+        );
+
+        setCountries(countryData);
 
         // เพิ่ม geojson source พร้อมเปิดใช้ clustering
         map.current.addSource("points", {
@@ -260,24 +278,36 @@ export default function MapComponent() {
 
   return (
     <div>
-      <Grid container spacing={2} className='pb-2 pt-4'>
-        <Grid size={1}></Grid>
-        <Grid size={11}>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/">
-              หน้าแรก
-            </Link>
-            <Typography sx={{ color: "text.primary" }}>
-              พิกัดแสดงบนแผนที่
-            </Typography>
-          </Breadcrumbs>
-        </Grid>
-      </Grid>
-
       <Container fixed>
-      <div className="pb-2">
-        <h1>พิกัดแสดงบนแผนที่ทั้งหมด</h1>
-      </div>
+        <div className="pb-2">
+          <h1>พรุ่งนี้อย่าลืมมาแก้ส่วนนี้ (ส่วนหัว) แสดงข้อความ ให้กดปุ่มประเทศได้ หลัง API โหลดเสร็จ</h1>
+        </div>
+        <div
+          style={{
+            marginBottom: "1rem",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px",
+          }}
+        >
+          {countries.map((country) => (
+            <Button
+              key={country.name}
+              variant="outlined"
+              color="primary"
+              size="small"
+              onClick={() => {
+                map.current.fitBounds(country.bounds, {
+                  padding: 50,
+                  maxZoom: 10,
+                });
+              }}
+              sx={{ borderRadius: 2, textTransform: "none" }}
+            >
+              {country.name}
+            </Button>
+          ))}
+        </div>
         <div
           ref={mapContainer}
           style={{ width: "100%", height: "600px", borderRadius: "8px" }}
