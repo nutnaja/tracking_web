@@ -279,9 +279,19 @@ export default function MapComponent() {
   return (
     <div>
       <Container fixed>
-        <div className="pb-2">
-          <h1>พรุ่งนี้อย่าลืมมาแก้ส่วนนี้ (ส่วนหัว) แสดงข้อความ ให้กดปุ่มประเทศได้ หลัง API โหลดเสร็จ</h1>
-        </div>
+        <Typography variant="h4" sx={{ mt: 1, color: "text.primary" }}>
+          ร้านค้าสะดวกซื้อที่ท่านตามหา มีกี่สาขา ที่ไหนกันบ้างนะ ? 
+        </Typography>
+        { loading ? (
+           <div className="pb-2">
+           <h1>กำลังโหลดข้อมูล โปรดรอสักครู่.......</h1>
+         </div>
+        ) : (
+         <div className="pb-2">
+         <h1>ท่านสามารถเลือกประเทศเพื่อซูมเข้าไปที่ประเทศนั้นได้</h1>
+       </div>
+       )}
+       
         <div
           style={{
             marginBottom: "1rem",

@@ -20,15 +20,15 @@ function Statistics() {
           sx={{
             textAlign: "center",
             py: 2,
-            backgroundColor: "secondary.light",
+            backgroundColor: '#f5f5f5' , 
             borderRadius: 4,
           }}
         >
-          <PeopleIcon sx={{ fontSize: 50, color: "secondary.main", mb: 2 }} />
+          <PeopleIcon sx={{ fontSize: 50, color: "secondary.primary", mb: 2 }} />
           <Typography
             variant="h6"
             gutterBottom
-            sx={{ color: "text.secondary" }}
+            sx={{ color: "text.primary" }}
           >
             ขณะนี้มีผู้เข้าชมแล้ว
           </Typography>
@@ -38,12 +38,12 @@ function Statistics() {
             sx={{
               fontWeight: "bold",
               fontSize: { xs: "3rem", sm: "4rem", md: "4rem" },
-              color: "secondary.dark",
+              color: "secondary.primary",
             }}
           >
             {visitorCount.toLocaleString("th-TH")}
           </Typography>
-          <Typography variant="h6" sx={{ mt: 1, color: "text.secondary" }}>
+          <Typography variant="h6" sx={{ mt: 1, color: "text.primary" }}>
             คน
           </Typography>
         </Card>

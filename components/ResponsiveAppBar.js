@@ -14,7 +14,7 @@ function ResponsiveAppBar() {
         <AppBar position="static">
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
-            <Link href="/">Tracking Shop</Link>
+            <Link href="/">Yoswaris Shop</Link>
             </Typography>
           </Toolbar>
         </AppBar>

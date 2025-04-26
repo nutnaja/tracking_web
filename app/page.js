@@ -11,8 +11,10 @@ export default function Home() {
         <ResponsiveAppBar />
       </div>
       <div className="pb-6">
-        <HighlightsHome />
         <MapComponent />
+      </div>
+      <div className="pb-6">
+      <HighlightsHome />
       </div>
       <Statistics />
       <Footer />
